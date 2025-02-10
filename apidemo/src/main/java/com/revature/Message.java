@@ -5,7 +5,8 @@ public class Message {
     private String username;
     private String msg;
 
-    public Message(String username, String msg){
+    public Message(int msgid, String username, String msg){
+        this.msgid= msgid;
         this.username = username;
         this.msg = msg;
     }
@@ -15,9 +16,21 @@ public class Message {
         return this.msg;
     }
 
-    public void setMessage(String msg, int msgid){
-        this.msg = msg;
-        this.msgid = msgid;
+    public String getUserName(){
+        return this.username;
     }
+
+    public int getMsgId(){
+        return this.msgid;
+    }
+
+    public void setMessage(String msg){
+        this.msg = msg;
+    }
+
+    public void setUserName(String username){
+        this.username = username;
+    }
+   
 
 }
