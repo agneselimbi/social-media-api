@@ -13,7 +13,7 @@ public class UserDAOImpl implements DAO<User> {
             Connection connection = ConnectionFactory.getConnectionFactory().getConnection();
 
             // sql statement
-            String sql = "SELECT username, password FROM user WHERE username = ?";
+            String sql = "SELECT username, password FROM users WHERE username = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, username);
             
@@ -21,7 +21,11 @@ public class UserDAOImpl implements DAO<User> {
             ResultSet rs = ps.executeQuery();
             
             // Return user 
-            User user = new User(username, rs.getString("password"));
+            String password = null;
+            while (rs.next()){
+                password = rs.getString("password");
+            }
+            User user = new User(username,password);
             return user;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,7 +38,7 @@ public class UserDAOImpl implements DAO<User> {
             Connection connection = ConnectionFactory.getConnectionFactory().getConnection();
 
             //sql statement
-            String sql = "SELECT * FROM user";
+            String sql = "SELECT * FROM users";
             Statement stmt = connection.createStatement();
 
             //Execute query
@@ -57,7 +61,7 @@ public class UserDAOImpl implements DAO<User> {
             Connection connection = ConnectionFactory.getConnectionFactory().getConnection();
 
             //SQL statement
-            String sql = "INSERT INTO user (username, password) VALUES (?,?)";
+            String sql = "INSERT INTO users (username, password) VALUES (?,?)";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1,user.getUserName());
             ps.setString(2, user.getPassword());
@@ -85,7 +89,7 @@ public class UserDAOImpl implements DAO<User> {
             Connection connection = ConnectionFactory.getConnectionFactory().getConnection();
         
             //SQL statement
-            String sql = "UPDATE user SET password = ? WHERE username = ?";
+            String sql = "UPDATE users SET password = ? WHERE username = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, user.getUserName());
             ps.setString(2, user.getPassword());
@@ -113,7 +117,7 @@ public class UserDAOImpl implements DAO<User> {
             Connection connection = ConnectionFactory.getConnectionFactory().getConnection();
         
             //SQL statement
-            String sql = "DELETE FROM user WHERE username = ?";
+            String sql = "DELETE FROM users WHERE username = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, username);
 
